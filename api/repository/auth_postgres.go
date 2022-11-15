@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"fmt"
+
 	models "github.com/AbdulahadAbduqahhorov/gin/todo-api/models"
 	"github.com/jmoiron/sqlx"
 )
@@ -14,5 +16,12 @@ func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 }
 
 func (p *AuthPostgres) CreateUser(user models.User) (int, error) {
-	return 0,nil
+	var id int
+	query := fmt.Sprintf("INSERT INTO %s (name, username, password_hash) VALUES ($1, $2, $3) RETURNING id", usersTable)
+	err:= p.db.QueryRow(query,user.Name, user.Username, user.Password).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id,nil
 }
+

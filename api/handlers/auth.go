@@ -12,6 +12,17 @@ func (h *Handler) signUp(c *gin.Context) {
 		h.handleErrorResponse(c,http.StatusBadRequest,"parse error", err)
 		return
 	}
+	result,err:=h.services.Authorization.CreateUser(form)
+	if err!=nil{
+		h.handleErrorResponse(c,http.StatusInternalServerError,"server error",err)
+		return
+	}
+
+	c.JSON(http.StatusCreated,map[string]interface{}{
+		"id":result,
+	})
+
+
 }
 func (h *Handler) signIn(c *gin.Context) {
 

@@ -9,6 +9,8 @@ import (
 	models "github.com/AbdulahadAbduqahhorov/gin/todo-api/models"
 )
 
+var salt="adsjadshalkjdhasddasdasdsdxcvslvs"
+
 type AuthService struct {
 	repo repository.Authorization
 }
@@ -27,5 +29,5 @@ func (s *AuthService) CreateUser(user models.User) (int, error) {
 func  genereatePasswordHash(password string) string {
 	h := sha1.New()
 	h.Write([]byte(password))
-	return hex.EncodeToString(h.Sum(nil))
+	return hex.EncodeToString(h.Sum([]byte(salt)))
 }
