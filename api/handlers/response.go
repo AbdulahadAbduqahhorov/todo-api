@@ -6,9 +6,9 @@ import (
 )
 
 type ErrorModel struct {
-	Code int `json:"code"`
-	Message string `json:"message"`
-	Error interface{} `json:"error"`
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Error   string `json:"error"`
 }
 
 // func (h *Handler) handleSuccessResponse(c *gin.Context, code int, message string, data interface{}) {
@@ -19,11 +19,11 @@ type ErrorModel struct {
 // 	})
 // }
 
-func (h *Handler) handleErrorResponse(c *gin.Context, code int, message string, err interface{}) {
+func (h *Handler) handleErrorResponse(c *gin.Context, code int, message string, err error) {
 	logrus.Error(message)
 	c.JSON(code, ErrorModel{
 		Code:    code,
 		Message: message,
-		Error:   err,
+		Error:   err.Error(),
 	})
 }
