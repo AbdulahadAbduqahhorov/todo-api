@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS todo_lists (
     description varchar(255) 
 );
 
-CREATE TABLE IF NOT EXISTS user_lists (
+CREATE TABLE IF NOT EXISTS users_lists (
     id BIGSERIAL NOT NULL UNIQUE,
     user_id INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     list_id INT REFERENCES todo_lists(id) ON DELETE CASCADE NOT NULL

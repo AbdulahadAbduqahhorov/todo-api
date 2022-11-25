@@ -32,3 +32,16 @@ func (h *Handler) userIdentity(c *gin.Context) {
 	}
 	c.Set(userCtx,user_id)
 }
+
+func getUserID(c *gin.Context)(int,error){
+	id, ok := c.Get(userCtx)
+	if !ok{
+		return 0,errors.New("user id not found")
+	}
+	idInt,ok:=id.(int)
+	if !ok{
+		
+		return 0,errors.New("invalid user id")
+	}
+	return idInt,nil
+}

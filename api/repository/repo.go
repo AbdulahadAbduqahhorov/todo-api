@@ -11,6 +11,12 @@ type Authorization interface {
 }
 
 type TodoList interface {
+	Create(userID int,entity models.TodoList) (int, error)
+	GetAll(userID int) ([]models.TodoList, error)
+	GetById(userID ,listId int)(models.TodoList,error)
+	Update(userID ,listId int,entity models.UpdateListInput)error
+	Delete(userID ,listId int)(error)
+
 }
 
 type TodoItem interface {
@@ -25,5 +31,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization:NewAuthPostgres(db),
+		TodoList: NewTodoListPostgres(db),
 	}
 }
