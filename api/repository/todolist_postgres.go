@@ -118,10 +118,19 @@ func (p *TodoListPostgres) 	Update(userID ,listId int,entity models.UpdateListIn
 
 func (p *TodoListPostgres) Delete(userId ,listId int)(error){
 	
-	query := fmt.Sprintf(`DELETE FROM %s as l USING %s as u WHERE l.id=u.list_id AND user_id=$1 AND u.list_id=$2`,todoListsTable,usersListsTable)
+	query := fmt.Sprintf(`
+			DELETE FROM %s as l 
+			USING %s as u 
+			WHERE l.id=u.list_id 
+			AND u.user_id=$1 
+			AND u.list_id=$2`,
+			todoListsTable,
+			usersListsTable,
+		)
 	_,err:=p.db.Exec(query,userId,listId)
 	if err!=nil{
 		return err
 	}
 	return nil
 }
+

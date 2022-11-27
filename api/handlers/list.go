@@ -11,6 +11,9 @@ import (
 type statusResponse struct{
 	Status string `json:"status"`
 }
+type getAllListsResponse struct{
+	Data interface{} `json:"data"`
+}
 
 func (h *Handler) createList(c *gin.Context) {
 	userId, err := getUserID(c)
@@ -32,12 +35,8 @@ func (h *Handler) createList(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
-
 }
 
-type getAllListsResponse struct{
-	Data []models.TodoList `json:"data"`
-}
 func (h *Handler) getAllLists(c *gin.Context) {
 	userId, err := getUserID(c)
 	if err != nil {
@@ -54,6 +53,7 @@ func (h *Handler) getAllLists(c *gin.Context) {
 		Data: lists,
 	})
 }
+
 func (h *Handler) getListByID(c *gin.Context) {
 	userId, err := getUserID(c)
 	if err != nil {	
@@ -104,10 +104,7 @@ func (h *Handler) updateList(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{
 		Status: "Ok",
 	})
-
-
 }
-
 
 func (h *Handler) deleteList(c *gin.Context) {
 
@@ -130,3 +127,5 @@ func (h *Handler) deleteList(c *gin.Context) {
 		Status: "ok",
 	})
 }
+
+
